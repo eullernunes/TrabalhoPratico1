@@ -7,8 +7,7 @@ public class Arquivo {
     private File arquivo;
     private static RandomAccessFile fileReader;
     private static long posicao;
-    public static Scanner sc = new Scanner(System.in);
-    public static int i = 0;
+    final int cabecalho = 4;
     
 
     public Arquivo(String arquivo)throws FileNotFoundException{
@@ -110,39 +109,24 @@ public class Arquivo {
     }
     
 
-    public void create() throws IOException{ 
-        Scanner sc = new Scanner(System.in);
-        Jogador jogador = new Jogador();
-        
+    public void create(Jogador jogador) throws IOException{ 
+
+        fileReader = new RandomAccessFile("jogador.db", "rw");
         fileReader.seek(0);
-        int ultimoId = Integer.parseInt(fileReader.readUTF());
-        ultimoId++;
-        jogador.setId(ultimoId);
+        int ultimoId = fileReader.readInt();
+        int proximoId = ultimoId + 1;
+        fileReader.seek(0);
+        fileReader.writeInt(proximoId);
 
-        System.out.println("Digite o nome do jogador:");
-        jogador.setKnownAs(sc.nextLine());
+        fileReader.seek(arquivo.length());
 
-        System.out.println("Digite o Overall do jogador:");
-        jogador.setOverall(sc.nextByte());
+        jogador.setId(proximoId);
+        byte[] ba = jogador.toByteArray();
+        fileReader.writeByte(' ');
+        fileReader.writeInt(proximoId);
+        fileReader.writeInt(ba.length);
+        fileReader.write(ba);     
 
-        System.out.println("Digite o valor do jogador:");
-        jogador.setValue(sc.nextDouble());
-
-        System.out.println("Digite a posição do jogador:");
-        jogador.setBestPosition(sc.nextLine());
-
-        System.out.println("Digite a nacionalidade do jogador");
-        jogador.setNacionality(sc.nextLine());
-
-        System.out.println("Digite a Idade do Jogador");
-        jogador.setAge(sc.nextByte());
-
-        System.out.println("Digite o Clube do Jogador");
-        jogador.setClubName(sc.nextLine());
-
-        escreverJogador(jogador);
-
-        sc.close();
 
 
     }
@@ -203,7 +187,10 @@ public class Arquivo {
             fileReader.write(ba);
         }else{
             fileReader.writeBoolean(false);
-            escreverJogador(jogador);
+
+            fileReader.seek(fileReader.length());
+            fileReader.writeInt(ba.length);
+            fileReader.write(ba);
         }
 
     }

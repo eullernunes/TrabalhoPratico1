@@ -24,7 +24,7 @@ public class Ordenacao {
         fileReader = new RandomAccessFile(arquivo,"rw");
     }
 
-    public void intercalacaoBalanceada2() throws Exception{
+    public void intercalacaoBalanceada() throws Exception{
         int count = 0, elementos = 0;
         fileReader.seek(0);
         fileReader.readUTF();

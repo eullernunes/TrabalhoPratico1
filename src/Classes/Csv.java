@@ -4,11 +4,11 @@ import java.io.*;
 
 public class Csv {
 
-    static String arquivo = "../csv/Fifa 23 Players Data.csv";
+    static String path = "csv/Fifa 23 Players Data.csv";
 
     public void lendoArquivo() throws Exception{
 
-        FileReader fileReader = new FileReader(arquivo);
+        FileReader fileReader = new FileReader(path);
         BufferedReader br = new BufferedReader(fileReader);
         String linha = "";
         int id = 0;
@@ -18,6 +18,7 @@ public class Csv {
 
         while(linha != null){
             id++;
+
             String[] array = linha.split(",");
 
             String knowAs = array[0];
@@ -30,7 +31,8 @@ public class Csv {
             String clubName = array[7];     
             
             Jogador novoJogador = new Jogador(id, knowAs, fullName, overall, value, bestPosition, nacionality, age, clubName);
-
+            Arquivo arq = new Arquivo();
+            arq.create(novoJogador);
             linha = br.readLine();
         }
 

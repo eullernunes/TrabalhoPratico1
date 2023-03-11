@@ -11,6 +11,9 @@ public class Main {
 
             arquivoCsv.lendoArquivo();
 
+            Menu menu = new Menu();
+            menu.exibeMenu();
+
         }catch (Exception e){
             e.printStackTrace();
         }

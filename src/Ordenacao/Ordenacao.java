@@ -3,7 +3,7 @@ package Ordenacao;
 import java.io.*;
 public class Ordenacao {
     private File arq;
-    private RandomAccessFile rf;
+    private RandomAccessFile fileReader;
     
 
     File arq1 = new File("arquivo1.db");
@@ -25,19 +25,7 @@ public class Ordenacao {
     }
 
     public void intercalacaoBalanceada() throws Exception{
-        int count = 0, elementos = 0;
-        fileReader.seek(0);
-        fileReader.readUTF();
-
-        Jogador[] jogador = new Jogador[20];
-
-        while(elementos < 40){
-            int i = 0;
-            while(i < 20){
-                jogador[i] = new Jogador();
-                int 
-            }
-        }
+        
     }
 
 }

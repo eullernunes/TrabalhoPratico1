@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 public class Menu{
 
-    public void exibeMenu() throws IOException{
+    public void exibeMenu() throws Exception{
         Scanner sc = new Scanner(System.in);
         Arquivo arquivo = new Arquivo();
         int opcao, id = 0;;
@@ -28,7 +28,7 @@ public class Menu{
                 System.out.println("Digite o id que deseja pesquisar: ");
                 id = sc.nextInt();
 
-                arquivo.pesquisa(id);
+                arquivo.read(id);
                 break;
             case 3:
                 System.out.println("Digite o id que deseja alterar: ");

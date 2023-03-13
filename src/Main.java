@@ -11,6 +11,8 @@ public class Main {
 
             arquivoCsv.lendoArquivo();
 
+            System.out.println("Teste");
+
             Menu menu = new Menu();
             menu.exibeMenu();
 

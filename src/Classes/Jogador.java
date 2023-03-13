@@ -1,13 +1,10 @@
 package Classes;
 
 import java.io.*;
-import java.text.SimpleDateFormat;
-import java.util.*;
-
 
 
 class Jogador{
-    private boolean lapide;
+    private char lapide;
     private int id;
     private String knownAs;
     private String fullName;
@@ -17,11 +14,10 @@ class Jogador{
     private String nacionality;
     private byte age;
     private String clubName;
-    private Date joinedOn;
 
 
     public Jogador(){
-        this.lapide = true;
+        this.lapide = ' ';
         this.id = -1;
         this.knownAs = "";
         this.fullName = "";
@@ -31,11 +27,9 @@ class Jogador{
         this.nacionality = "";
         this.age = 0;
         this.clubName = "";
-        //this.joinedOn = null;
     }
 
-    public Jogador(/*boolean lapide,*/ int id, String knownAs, String fullName, byte overall, double value, String bestPosition, String nacionality, byte age, String clubName/*, Date joinedOn*/){
-        //this.lapide = lapide;
+    public Jogador(int id, String knownAs, String fullName, byte overall, double value, String bestPosition, String nacionality, byte age, String clubName){
         this.id = id;
         this.knownAs = knownAs;
         this.fullName = fullName;
@@ -45,7 +39,6 @@ class Jogador{
         this.nacionality = nacionality;
         this.age = age;
         this.clubName = clubName;
-        //this.joinedOn = joinedOn;
     }
 
     public int getId(){
@@ -120,41 +113,19 @@ class Jogador{
         this.clubName = clubName;
     }
 
-    public boolean getLapide(){
+    public char getLapide(){
         return this.lapide;
     }
 
-    public void setLapide(boolean lapide){
+    public void setLapide(char lapide){
         this.lapide = lapide;
     }
-
-    public Date getJoinedOn(){
-        return joinedOn;
-    }
-
-    public void setJoinedOn(String joinedOn) throws Exception{
-        Date date = stringToDate(joinedOn);
-        this.joinedOn = date;
-    }
-
-    public Date stringToDate(String data) throws Exception{
-        Date date = null;
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
-        date = sdf.parse(data);
-        return date;
-    }
-
-    public static String dateToString(Date date) {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
-        String string = sdf.format(date);
-        return string;
-    }
-
+    
     public byte[] toByteArray() throws IOException{
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         DataOutputStream dos = new DataOutputStream(out);
 
-        dos.writeBoolean(lapide);
+        dos.writeChar(lapide);
         dos.writeInt(id);
         dos.writeUTF(knownAs);
         dos.writeUTF(fullName);
@@ -164,9 +135,6 @@ class Jogador{
         dos.writeUTF(nacionality);
         dos.writeByte(age);
         dos.writeUTF(clubName);
-        dos.writeInt(dateToString(joinedOn).length());
-        dos.writeUTF(dateToString(joinedOn));
-
 
         return out.toByteArray();
     }
@@ -175,7 +143,7 @@ class Jogador{
         ByteArrayInputStream input = new ByteArrayInputStream(out);
         DataInputStream dis = new DataInputStream(input);
 
-        lapide = dis.readBoolean();
+        lapide = dis.readChar();
         id = dis.readInt();
         knownAs = dis.readUTF();
         fullName = dis.readUTF();

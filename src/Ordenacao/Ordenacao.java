@@ -25,7 +25,9 @@ public class Ordenacao {
     }
 
     public void intercalacaoBalanceada() throws Exception{
-        
+        int count = 0;
+        fileReader.seek(0);
+
     }
 
 }

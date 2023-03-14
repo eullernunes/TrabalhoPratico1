@@ -19,36 +19,15 @@ public class Ordenacao {
     File arq4 = new File("arquivo4.db");
     RandomAccessFile arquivo4 = new RandomAccessFile("arquivo4.db", "rw");
 
-    int total = 100;
+    int total = 0;
 
 
-    Ordenacao(String arquivo) throws FileNotFoundException{
+    Ordenacao(String arquivo) throws Exception{
         this.arq = new File(arquivo);
         fileReader = new RandomAccessFile("jogadores.db","rw");
     }
 
-    public void intercalacaoBalanceada() throws Exception{
-        int count = 0;
-        fileReader.seek(0);
-        int ultimoId = fileReader.readInt();
-
-        total = ultimoId;
-
-        Jogador[] array = new Jogador[total/2];
-
-        int elementos = 0;
-
-        while(elementos < total){
-            int x = 0;
-            while(x < total/2){
-                array[x] = new Jogador();
-                int tamanhoJogador = fileReader.readInt();
-                posicao = fileReader.getFilePointer();
-                
-            }
-        }
+    public void intercalacaoBalanceadaComum() throws Exception {
         
-
     }
-
 }

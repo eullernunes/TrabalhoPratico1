@@ -6,19 +6,18 @@ public class Csv {
 
     static String path = "csv/Fifa 23 Players Data.csv";
 
-    public void lendoArquivo() throws IOException{
+    public void lendoArquivo() throws Exception{
 
         FileReader fileReader = new FileReader(path);
         BufferedReader br = new BufferedReader(fileReader);
         String linha = "";
-        int id = 0;
+        int id = 1;
 
         br.readLine(); // Ignora a primeira linha do csv
         linha = br.readLine();
 
         while(linha != null){
             id++;
-            System.out.println(id + linha);
             String[] array = linha.split(",");
 
             String knowAs = array[0];
@@ -31,9 +30,10 @@ public class Csv {
             String clubName = array[7];  
             //String joinedOn = array[8];   
             
-            Jogador novoJogador = new Jogador(id, knowAs, fullName, overall, value, bestPosition, nacionality, age, clubName);
+            Jogador novoJogador = new Jogador(knowAs, fullName, overall, value, bestPosition, nacionality, age, clubName);
             Arquivo arq = new Arquivo();
-            arq.escreverJogador(novoJogador);
+            arq.create(novoJogador);
+           
             linha = br.readLine();
         }
 

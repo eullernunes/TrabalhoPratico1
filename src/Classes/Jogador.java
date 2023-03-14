@@ -4,7 +4,6 @@ import java.io.*;
 
 
 class Jogador{
-    private char lapide;
     private int id;
     private String knownAs;
     private String fullName;
@@ -17,7 +16,6 @@ class Jogador{
 
 
     public Jogador(){
-        this.lapide = ' ';
         this.id = -1;
         this.knownAs = "";
         this.fullName = "";
@@ -29,8 +27,8 @@ class Jogador{
         this.clubName = "";
     }
 
-    public Jogador(int id, String knownAs, String fullName, byte overall, double value, String bestPosition, String nacionality, byte age, String clubName){
-        this.id = id;
+    public Jogador(String knownAs, String fullName, byte overall, double value, String bestPosition, String nacionality, byte age, String clubName){
+       
         this.knownAs = knownAs;
         this.fullName = fullName;
         this.overall = overall;
@@ -113,20 +111,11 @@ class Jogador{
         this.clubName = clubName;
     }
 
-    public char getLapide(){
-        return this.lapide;
-    }
-
-    public void setLapide(char lapide){
-        this.lapide = lapide;
-    }
     
     public byte[] toByteArray() throws IOException{
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         DataOutputStream dos = new DataOutputStream(out);
 
-        dos.writeChar(lapide);
-        dos.writeInt(id);
         dos.writeUTF(knownAs);
         dos.writeUTF(fullName);
         dos.writeByte(overall);
@@ -143,15 +132,24 @@ class Jogador{
         ByteArrayInputStream input = new ByteArrayInputStream(out);
         DataInputStream dis = new DataInputStream(input);
 
-        lapide = dis.readChar();
-        id = dis.readInt();
-        knownAs = dis.readUTF();
-        fullName = dis.readUTF();
-        overall = dis.readByte();
-        value = dis.readDouble();
-        bestPosition = dis.readUTF();
-        nacionality = dis.readUTF();
-        age = dis.readByte();
-        clubName = dis.readUTF();
+        this.knownAs = dis.readUTF();
+        this.fullName = dis.readUTF();
+        this.overall = dis.readByte();
+        this.value = dis.readDouble();
+        this.bestPosition = dis.readUTF();
+        this.nacionality = dis.readUTF();
+        this.age = dis.readByte();
+        this.clubName = dis.readUTF();
+    }
+
+    public String toString(){
+        return "KnowAs: "   + this.knownAs
+        +"\nFullName: "     + this.fullName
+        +"\nOverall: "      + this.overall
+        +"\nValue: "        + this.value
+        +"\nBestPosition: " + this.bestPosition
+        +"\nNacionality: "  + this.nacionality
+        +"\nAge: "          + this.age
+        +"\nClubName: "     +this.clubName;
     }
 }

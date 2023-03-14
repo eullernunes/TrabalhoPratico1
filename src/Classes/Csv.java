@@ -1,6 +1,8 @@
 package Classes;
 
 import java.io.*;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class Csv {
 
@@ -17,20 +19,51 @@ public class Csv {
         linha = br.readLine();
 
         while(linha != null){
+            Jogador novoJogador = new Jogador();
             id++;
             String[] array = linha.split(",");
 
+            novoJogador.setId(id);
+
             String knowAs = array[0];
+            novoJogador.setKnownAs(knowAs);
+
             String fullName = array[1];
+            novoJogador.setFullName(fullName);
+
             Byte overall = Byte.parseByte(array[2]);
+            novoJogador.setOverall(overall);
+
             double value = Double.parseDouble(array[3]);
+            novoJogador.setValue(value);
+
             String bestPosition = array[4];
+            novoJogador.setBestPosition(bestPosition);
+
             String nacionality = array[5];
+            novoJogador.setNacionality(nacionality);
+
             Byte age = Byte.parseByte(array[6]);
-            String clubName = array[7];  
-            //String joinedOn = array[8];   
+            novoJogador.setAge(age);
+
+            String clubName = array[7];
+            novoJogador.setClubName(clubName);
             
-            Jogador novoJogador = new Jogador(knowAs, fullName, overall, value, bestPosition, nacionality, age, clubName);
+            String dateString = array[8];   
+            novoJogador.setJoinedOn(dateString);
+           
+           /*System.out.println("KnowAs: "   + novoJogador.getKnownAs()
+            +"\nFullName: "     + novoJogador.getFullName()
+            +"\nOverall: "      + novoJogador.getOverall()
+            +"\nValue: "        + novoJogador.getValue()
+            +"\nBestPosition: " + novoJogador.getBestPosition()
+            +"\nNacionality: "  + novoJogador.getNacionality()
+            +"\nAge: "          + novoJogador.getAge()
+            +"\nClubName: "     + novoJogador.getClubName()
+            +"\nJoinedOn: "     + novoJogador.getJoinedOn()
+            );
+            */
+        
             Arquivo arq = new Arquivo();
             arq.create(novoJogador);
            

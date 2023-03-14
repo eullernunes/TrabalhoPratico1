@@ -1,6 +1,8 @@
 package Classes;
 
 import java.io.*;
+import java.util.*;
+import java.text.SimpleDateFormat;
 
 
 class Jogador{
@@ -13,6 +15,7 @@ class Jogador{
     private String nacionality;
     private byte age;
     private String clubName;
+    private Date joinedOn;
 
 
     public Jogador(){
@@ -25,9 +28,10 @@ class Jogador{
         this.nacionality = "";
         this.age = 0;
         this.clubName = "";
+        this.joinedOn = null;
     }
 
-    public Jogador(String knownAs, String fullName, byte overall, double value, String bestPosition, String nacionality, byte age, String clubName){
+    public Jogador(String knownAs, String fullName, byte overall, double value, String bestPosition, String nacionality, byte age, String clubName, Date joinedOn){
        
         this.knownAs = knownAs;
         this.fullName = fullName;
@@ -37,6 +41,7 @@ class Jogador{
         this.nacionality = nacionality;
         this.age = age;
         this.clubName = clubName;
+        this.joinedOn = joinedOn;
     }
 
     public int getId(){
@@ -111,7 +116,31 @@ class Jogador{
         this.clubName = clubName;
     }
 
+    public Date getJoinedOn(){
+        return joinedOn;
+    }
+
+    public void setJoinedOn(String stringDate) throws Exception{
+        Date date = convertToDate(stringDate);
+        this.joinedOn = date;
+    }
+
+    public Date convertToDate(String strData) throws Exception {
+        Date date = null;
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
+        date = sdf.parse(strData);
+        return date;
+    }
+
+    public static String convertDateToString(Date date) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
+        String dateString = sdf.format(date);
+        return dateString;
+    }
     
+    /*
+     * Escreve o objeto jogador em um arquivo de bytes
+    */
     public byte[] toByteArray() throws IOException{
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         DataOutputStream dos = new DataOutputStream(out);
@@ -124,32 +153,39 @@ class Jogador{
         dos.writeUTF(nacionality);
         dos.writeByte(age);
         dos.writeUTF(clubName);
+        dos.writeUTF(convertDateToString(joinedOn));
 
         return out.toByteArray();
     }
 
-    public void fromByteArray(byte[] out) throws IOException{
+    /*
+     * Lê o objeto jogador de um arquivo de bytes
+     */
+    public void fromByteArray(byte[] out) throws Exception{
         ByteArrayInputStream input = new ByteArrayInputStream(out);
         DataInputStream dis = new DataInputStream(input);
 
-        this.knownAs = dis.readUTF();
-        this.fullName = dis.readUTF();
-        this.overall = dis.readByte();
-        this.value = dis.readDouble();
-        this.bestPosition = dis.readUTF();
-        this.nacionality = dis.readUTF();
-        this.age = dis.readByte();
-        this.clubName = dis.readUTF();
+        setKnownAs(dis.readUTF());
+        setFullName(dis.readUTF());
+        setOverall(dis.readByte());
+        setValue(dis.readDouble());
+        setBestPosition(dis.readUTF());
+        setNacionality(dis.readUTF());
+        setAge(dis.readByte());
+        setClubName(dis.readUTF());
+        setJoinedOn(dis.readUTF());
     }
 
     public String toString(){
-        return "KnowAs: "   + this.knownAs
-        +"\nFullName: "     + this.fullName
-        +"\nOverall: "      + this.overall
-        +"\nValue: "        + this.value
-        +"\nBestPosition: " + this.bestPosition
-        +"\nNacionality: "  + this.nacionality
-        +"\nAge: "          + this.age
-        +"\nClubName: "     +this.clubName;
+        return "KnowAs: "   + getKnownAs()
+        +"\nFullName: "     + getFullName()
+        +"\nOverall: "      + getOverall()
+        +"\nValue: "        + getValue()
+        +"\nBestPosition: " + getBestPosition()
+        +"\nNacionality: "  + getNacionality()
+        +"\nAge: "          + getAge()
+        +"\nClubName: "     + getClubName()
+        +"\nJoinedOn: "     + getJoinedOn();
+        
     }
 }

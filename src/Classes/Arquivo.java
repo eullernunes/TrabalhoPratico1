@@ -16,6 +16,9 @@ public class Arquivo {
     public Arquivo(){}
 
     
+    /*
+     * 'Pesquisa' no arquivo de bytes
+    */
     public Jogador read(int id) throws Exception{
         fileReader = new RandomAccessFile("jogadores.db", "rw");
 
@@ -26,6 +29,13 @@ public class Arquivo {
         byte[] ba;
         int idJogador;
 
+        /*
+         * Enquanto não chegar o fim do arquivo, pesquisa pelo jogador
+         * Confere se o registro possui lapide e se o id do registro é igual ao id pesquisado
+         * Se for, salva o registro em um array de bytes e transforma em um Objeto para printar pro usuario
+         * Se não, "pula" pro proximo registro
+        */
+        
         while(fileReader.getFilePointer() < fileReader.length()){
             lapide = fileReader.readBoolean();
             idJogador = fileReader.readInt();
@@ -77,6 +87,19 @@ public class Arquivo {
         return proximoId;
     }
 
+    /*   
+     * Método update
+     * Acessa o arquivo na primeira posição depois do cabeçalho
+     * Enquanto não chegar o fim do arquivo, pesquisa pelo jogador
+     * Salva a posição e conteúdo da lápide e o tamanho do registro
+     * Confere se o registro possui lapide e se o id do registro é igual ao id pesquisado
+     * Se for, salva o registro em um array de bytes e transforma em um Objeto
+     * Confere se o tamanho do novo objeto (recebido como parâmetro) é igual ou menor ao tamanho do registro antigo
+     * Se for, vai pra posição inicial do registro (posicao lapide + 9) e escreve o novo registro
+     * Se não for, vai pra posição da lapide do registro e marca como excluído 
+     * Vai para o fim do arquivo e salva o novo registro
+    */
+
 
     public Jogador update(Jogador novoJogador) throws Exception{
         fileReader.seek(4);
@@ -122,6 +145,16 @@ public class Arquivo {
 
         return null;
     }
+
+   /*   
+     * Método delete
+     * Acessa o arquivo na primeira posição depois do cabeçalho
+     * Enquanto não chegar o fim do arquivo, pesquisa pelo jogador
+     * Salva a posição e conteúdo da lápide e o tamanho do registro
+     * Confere se o registro possui lapide e se o id do registro é igual ao id pesquisado
+     * Se for, salva o registro em um array de bytes, marca a lapide como excluido e retorna o objeto para o usuario
+     * Se não for, pula o tamanho do registro 
+    */
 
     public Jogador delete(int id) throws Exception{
         fileReader = new RandomAccessFile("jogadores.db", "rw");

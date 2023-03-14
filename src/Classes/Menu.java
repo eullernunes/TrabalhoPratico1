@@ -1,8 +1,16 @@
 package Classes;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Scanner;
 
+import javax.swing.JApplet;
+
 public class Menu{
+
+    /*
+     * Exibe menu com opções para o usuário escolher
+    */
 
     public void exibeMenu() throws Exception{
         Scanner sc = new Scanner(System.in);
@@ -21,9 +29,12 @@ public class Menu{
         opcao = sc.nextInt();
         
 
-        switch(opcao) { // trata as opcoes
+        /*
+         * Trata as opções
+        */
+        switch(opcao) {        
             case 1:
-                Jogador createJogador = lerDados();
+                Jogador createJogador = lerDados(); 
                 arquivo.create(createJogador);
                 break;
             case 2:
@@ -88,39 +99,44 @@ public class Menu{
         }
     }
 
+    /*
+     * Cria o objeto jogador de acordo com a entrada do usuário
+    */
+
     public Jogador lerDados() throws Exception{
         Scanner sc = new Scanner(System.in);
+        Jogador jogador = new Jogador();
 
         System.out.println("\nDigite o nome do jogador");
-        String knownAs = sc.nextLine();
+        jogador.setKnownAs(sc.nextLine());
 
         System.out.println("\nDigite o nome compledo do jogador");
-        String fullName = sc.nextLine();
+        jogador.setFullName(sc.nextLine());
 
         System.out.println("\nDigite o Overall do jogador");
-        byte overall = sc.nextByte();
+        jogador.setOverall(sc.nextByte());
 
         System.out.println("\nDigite o valor do jogador:");
-        long value = sc.nextLong();
+        jogador.setValue(sc.nextDouble());
 
         clearBuffer(sc);
 
         System.out.println("\nDigite a posição do jogador");
-        String bestPosition = sc.nextLine();
+        jogador.setBestPosition(sc.nextLine());
 
         System.out.println("\nDigite a nacionalidade do jogador");
-        String nacionality = sc.nextLine();
+        jogador.setNacionality(sc.nextLine());
 
         System.out.println("\nDigite a idade do jogador");
-        byte age = sc.nextByte();
+        jogador.setAge(sc.nextByte());
 
         clearBuffer(sc);
 
         System.out.println("\nDigite o clube do jogador");
-        String clubeName = sc.nextLine();
+        jogador.setClubName(sc.nextLine());
 
-        Jogador jogador;
-        jogador = new Jogador(knownAs, fullName, overall, value, bestPosition, nacionality, age, clubeName);
+        System.out.println("\nEntre com a data de ingresso do jogador");
+        jogador.setJoinedOn(sc.nextLine());
 
         sc.close();
         return jogador;

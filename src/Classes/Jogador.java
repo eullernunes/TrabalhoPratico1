@@ -10,7 +10,7 @@ class Jogador{
     private String knownAs;
     private String fullName;
     private byte overall;
-    private double value;
+    private int value;
     private String bestPosition;
     private String nacionality;
     private byte age;
@@ -31,8 +31,7 @@ class Jogador{
         this.joinedOn = null;
     }
 
-    public Jogador(String knownAs, String fullName, byte overall, double value, String bestPosition, String nacionality, byte age, String clubName, Date joinedOn){
-       
+    public Jogador(String knownAs, String fullName, byte overall, int value, String bestPosition, String nacionality, byte age, String clubName, Date joinedOn){
         this.knownAs = knownAs;
         this.fullName = fullName;
         this.overall = overall;
@@ -76,11 +75,11 @@ class Jogador{
         this.overall = overall;
     }
 
-    public double getValue(){
+    public int getValue(){
         return this.value;
     }
 
-    public void setValue(double value){
+    public void setValue(int value){
         this.value = value;
     }
 
@@ -145,14 +144,29 @@ class Jogador{
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         DataOutputStream dos = new DataOutputStream(out);
 
+
+        dos.writeInt(id);
+
+        dos.writeShort(knownAs.length());        
         dos.writeUTF(knownAs);
+
+        dos.writeShort(fullName.length()); 
         dos.writeUTF(fullName);
+
         dos.writeByte(overall);
-        dos.writeDouble(value);
+        dos.writeInt(value);
+
+        dos.writeShort(bestPosition.length()); 
         dos.writeUTF(bestPosition);
+
+        dos.writeShort(nacionality.length()); 
         dos.writeUTF(nacionality);
+
         dos.writeByte(age);
+
+        dos.writeShort(clubName.length()); 
         dos.writeUTF(clubName);
+ 
         dos.writeUTF(convertDateToString(joinedOn));
 
         return out.toByteArray();
@@ -165,14 +179,28 @@ class Jogador{
         ByteArrayInputStream input = new ByteArrayInputStream(out);
         DataInputStream dis = new DataInputStream(input);
 
+        setId(id);;
+        
+        dis.readShort();
         setKnownAs(dis.readUTF());
+
+        dis.readShort();
         setFullName(dis.readUTF());
+
         setOverall(dis.readByte());
-        setValue(dis.readDouble());
+        setValue(dis.readInt());
+
+        dis.readShort();
         setBestPosition(dis.readUTF());
+
+        dis.readShort();
         setNacionality(dis.readUTF());
+
         setAge(dis.readByte());
+
+        dis.readShort();
         setClubName(dis.readUTF());
+
         setJoinedOn(dis.readUTF());
     }
 

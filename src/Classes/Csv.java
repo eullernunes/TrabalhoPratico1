@@ -1,8 +1,6 @@
 package Classes;
 
 import java.io.*;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 public class Csv {
 
@@ -13,17 +11,14 @@ public class Csv {
         FileReader fileReader = new FileReader(path);
         BufferedReader br = new BufferedReader(fileReader);
         String linha = "";
-        int id = 1;
 
         br.readLine(); // Ignora a primeira linha do csv
         linha = br.readLine();
 
         while(linha != null){
             Jogador novoJogador = new Jogador();
-            id++;
             String[] array = linha.split(",");
 
-            novoJogador.setId(id);
 
             String knowAs = array[0];
             novoJogador.setKnownAs(knowAs);
@@ -34,7 +29,7 @@ public class Csv {
             Byte overall = Byte.parseByte(array[2]);
             novoJogador.setOverall(overall);
 
-            double value = Double.parseDouble(array[3]);
+            int value = Integer.parseInt(array[3]);
             novoJogador.setValue(value);
 
             String bestPosition = array[4];

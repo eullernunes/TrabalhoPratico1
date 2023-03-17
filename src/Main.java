@@ -5,7 +5,6 @@ public class Main {
         
         Arquivo arquivo;
         Csv arquivoCsv = new Csv();
-        int opcao = 1;
 
         try{
             arquivo = new Arquivo("Jogadores");

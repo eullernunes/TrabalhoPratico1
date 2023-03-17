@@ -1,10 +1,7 @@
 package Classes;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Scanner;
 
-import javax.swing.JApplet;
 
 public class Menu{
 
@@ -117,7 +114,7 @@ public class Menu{
         jogador.setOverall(sc.nextByte());
 
         System.out.println("\nDigite o valor do jogador:");
-        jogador.setValue(sc.nextDouble());
+        jogador.setValue(sc.nextInt());
 
         clearBuffer(sc);
 

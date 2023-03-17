@@ -22,24 +22,22 @@ public class Arquivo {
     public Jogador read(int id) throws Exception{
         fileReader = new RandomAccessFile("jogadores.db", "rw");
 
-        fileReader.seek(4);
         boolean lapide;
         int tamanho;
         Jogador jogador = new Jogador();
         byte[] ba;
         int idJogador;
 
-        /*
-         * Enquanto não chegar o fim do arquivo, pesquisa pelo jogador
-         * Confere se o registro possui lapide e se o id do registro é igual ao id pesquisado
-         * Se for, salva o registro em um array de bytes e transforma em um Objeto para printar pro usuario
-         * Se não, "pula" pro proximo registro
-        */
-        
+        fileReader.seek(4);
+
+
         while(fileReader.getFilePointer() < fileReader.length()){
             lapide = fileReader.readBoolean();
-            idJogador = fileReader.readInt();
             tamanho = fileReader.readInt();
+            idJogador = fileReader.readInt();
+
+
+            System.out.println(tamanho);
             if(!lapide && idJogador == id){            
                 ba = new byte[tamanho];
                 fileReader.read(ba);
@@ -48,7 +46,7 @@ public class Arquivo {
                 return jogador;
             
             } else{
-                fileReader.skipBytes(tamanho);
+                fileReader.skipBytes(tamanho - 4);
             }
 
         }
@@ -65,23 +63,29 @@ public class Arquivo {
      * Por fim escreve toda a informação do byte array e retorna o ultimo id utilizado
     */
 
+
     public int create (Jogador jogador) throws Exception{
         fileReader = new RandomAccessFile("jogadores.db", "rw");
         fileReader.seek(0);
+
         int ultimoId = fileReader.readInt();
-    
+
+
         int proximoId = ultimoId + 1;
-        fileReader.seek(0);
-        fileReader.writeInt(proximoId);
+
 
         fileReader.seek(fileReader.length());
 
         jogador.setId(proximoId);
         byte[] ba = jogador.toByteArray();
         fileReader.writeBoolean(false);
-        fileReader.writeInt(proximoId);
         fileReader.writeInt(ba.length);
         fileReader.write(ba);
+
+        
+
+        fileReader.seek(0);
+        fileReader.writeInt(proximoId);
 
 
         return proximoId;
@@ -114,8 +118,8 @@ public class Arquivo {
         while(fileReader.getFilePointer() < fileReader.length()){
             posicaoLapide = fileReader.getFilePointer();
             lapide = fileReader.readBoolean();
-            idJogador = fileReader.readInt();
             tamanho = fileReader.readInt();
+            idJogador = fileReader.readInt();
             if(!lapide && idJogador == novoJogador.getId()){
               
                 ba = new byte[tamanho];
@@ -132,8 +136,8 @@ public class Arquivo {
                     fileReader.writeBoolean(true);
                     fileReader.seek(fileReader.length());
                     fileReader.writeBoolean(false);
-                    fileReader.writeInt(idJogador);
                     fileReader.writeInt(baNovo.length);
+                    fileReader.writeInt(idJogador);
                     fileReader.write(baNovo);
                 }
                 return jogador;
@@ -170,8 +174,8 @@ public class Arquivo {
         while(fileReader.getFilePointer() < fileReader.length()){
             posicaoLapide = fileReader.getFilePointer();
             lapide = fileReader.readBoolean();
-            idJogador = fileReader.readInt();
             tamanho = fileReader.readInt();
+            idJogador = fileReader.readInt();
             if(!lapide && idJogador == id){
                 
                 ba = new byte[tamanho];
@@ -183,7 +187,7 @@ public class Arquivo {
                 return jogador;
                 
             } else{
-                fileReader.skipBytes(tamanho);
+                fileReader.skipBytes(tamanho + 4);
             }
 
         }
